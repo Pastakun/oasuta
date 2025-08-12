@@ -2,7 +2,11 @@ const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const axios = require("axios");
 const { Readable } = require("stream");
 const vm = require("vm");
-
+const http = require("http");
+http.createServer(function(req, res){
+    res.write("OK");
+    res.end();
+}).listen(8080);
 
 const DATABASE_CHANNEL_ID = "1402999086331990221";
 
