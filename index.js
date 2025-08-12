@@ -92,7 +92,7 @@ client.on("messageCreate", async (message) => {
             messages: [
               {
                 role: "system",
-                content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使わないでください。 axiosは認証不要のapiを使ってください。`,
+                content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使用しないでください。 axiosは認証不要のapiを使用してください。`,
               },
               { role: "user", content: prompt },
             ],
