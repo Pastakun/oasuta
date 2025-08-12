@@ -88,7 +88,7 @@ client.on("messageCreate", async (message) => {
             messages: [
               {
                 role: "system",
-                content: "入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使わないでください。 axiosは認証不要のapiを使ってください。",
+                content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使わないでください。 axiosは認証不要のapiを使ってください。`,
               },
               { role: "user", content: prompt },
             ],
@@ -102,6 +102,7 @@ client.on("messageCreate", async (message) => {
         );
         const match = response.data.choices[0].message.content.match(/```javascript\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
         if (match) {
+          console.log(match[1]);
           const context = {
             message,
             client,
