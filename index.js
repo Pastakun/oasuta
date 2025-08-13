@@ -92,14 +92,14 @@ client.on("messageCreate", async (message) => {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
-          { role:"system", content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、実行するコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 axiosは認証不要のapiを使用してください。` },
+          { role:"system", content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、処理本体だけ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 axiosは認証不要のapiを使用してください。` },
           { role: "user", content: prompt }
       ],
       model: "openai/gpt-4.1-nano"
     }
   });
           console.log(response.body.choices[0].message.content);
-        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
+        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n([\s\S]*?)\n```/);
         if (match) {
           const context = {
             message,
@@ -118,6 +118,22 @@ client.on("messageCreate", async (message) => {
           };
           await runAsyncCode(match[1], context, 10000);
         } else {
+          const context = {
+            message,
+            client,
+            setTimeout,
+            axios,
+            require: (mod) => {
+              if (mod === "discord.js") {
+                return discord;
+              } else if (mod === "axios") {
+                return axios;
+              } else {
+                new Error("Module not allowed");
+              }
+            },
+          };
+          await runAsyncCode(response.body.choices[0].message.content, context, 10000);
         }
       }
     } catch (error) {
