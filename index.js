@@ -95,7 +95,7 @@ client.on("messageCreate", async (message) => {
           { role:"system", content: `${process.env.system} discord.jsのmessageCreateのコードだけ出力してください。 axiosは認証不要のapiを使用してください。` },
           { role: "user", content: prompt }
       ],
-      model: "openai/gpt-4.1-nano"
+      model: "openai/gpt-4.1-mini"
     }
   });
           console.log(response.body.choices[0].message.content);
