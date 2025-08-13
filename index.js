@@ -92,14 +92,14 @@ client.on("messageCreate", async (message) => {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
-          { role:"system", content: `${process.env.system} discord.jsのmessageCreateのコードだけ出力してください。 axiosは認証不要のapiを使用してください。` },
+          { role:"system", content: "discord.jsのmessageCreateのコードだけ出力してください。" },
           { role: "user", content: prompt }
       ],
       model: "openai/gpt-4.1-mini"
     }
   });
           console.log(response.body.choices[0].message.content);
-        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
+        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n[\s\S]*?=> {\n([\s\S]*?)}\);\n```/);
         if (match) {
           const context = {
             message,
