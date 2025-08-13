@@ -99,7 +99,7 @@ client.on("messageCreate", async (message) => {
     }
   });
           console.log(response.body.choices[0].message.content);
-        const match = response.body.choices[0].message.content.match(/```javascript\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
+        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
         if (match) {
           const context = {
             message,
