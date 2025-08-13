@@ -86,13 +86,14 @@ client.on("messageCreate", async (message) => {
   }
 
   if (message.content.startsWith("oasuta")) {
+      message.content = message.content.slice("oasuta".length);
     const prompt = message.content;
     try {
       if (true) {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
-          { role:"system", content: "discord.jsのmessageCreateのコードだけ出力してください。" },
+          { role:"system", content: "あなた「oasuta」は、discord.jsのmessageCreateのコードだけ出力してください。" },
           { role: "user", content: prompt }
       ],
       model: "openai/gpt-4.1-mini"
