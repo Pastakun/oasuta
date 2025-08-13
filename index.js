@@ -92,7 +92,7 @@ client.on("messageCreate", async (message) => {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
-          { role:"system", content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、処理本体だけ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 axiosは認証不要のapiを使用してください。` },
+          { role:"system", content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、関数宣言を除いて出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 axiosは認証不要のapiを使用してください。` },
           { role: "user", content: prompt }
       ],
       model: "openai/gpt-4.1-nano"
