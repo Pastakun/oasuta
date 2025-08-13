@@ -98,9 +98,9 @@ client.on("messageCreate", async (message) => {
       model: "openai/gpt-4.1-nano"
     }
   });
+          console.log(response.body.choices[0].message.content);
         const match = response.body.choices[0].message.content.match(/```javascript\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
         if (match) {
-          console.log(match[1]);
           const context = {
             message,
             client,
