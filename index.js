@@ -1,8 +1,10 @@
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
-const axios = require("axios");
-const { Readable } = require("stream");
-const vm = require("vm");
-const http = require("http");
+import { Client, GatewayIntentBits, Partials } from "discord.js";
+import axios from "axios";
+import { Readable } from "stream";
+import vm from "vm";
+import http from "http";
+import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
+import { AzureKeyCredential } from "@azure/core-auth";
 http.createServer(function(req, res){
     res.write("OK");
     res.end();
@@ -20,7 +22,10 @@ const client = new Client({
     GatewayIntentBits.DirectMessages,
   ],
 });
-
+  const modelclient = ModelClient(
+    "https://models.github.ai/inference",
+    new AzureKeyCredential(process.env.github),
+  );
 async function loadUserData() {
   try {
     const channel = await client.channels.fetch(DATABASE_CHANNEL_ID);
@@ -84,27 +89,16 @@ client.on("messageCreate", async (message) => {
     const prompt = message.content;
     try {
       if (true) {
-        const response = await axios.post(
-          "https://api.ai21.com/studio/v1/chat/completions",
-          {
-            model: "jamba-large",
-            max_tokens: 512,
-            messages: [
-              {
-                role: "system",
-                content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使用しないでください。 axiosは認証不要のapiを使用してください。`,
-              },
-              { role: "user", content: prompt },
-            ],
-          },
-          {
-            headers: {
-              "Authorization": `Bearer ${process.env.ai21}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const match = response.data.choices[0].message.content.match(/```javascript\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
+  const response = await modelclient.path("/chat/completions").post({
+    body: {
+      messages: [
+          { role:"system", content: `${process.env.system} 入力はdiscord.jsのmessageCreateのメッセージで、メッセージに対応するdiscord.jsのmessageCreateのコードのみ出力してください。 clientオブジェクトとmessageオブジェクトが取得できます。 embedは使用しないでください。 axiosは認証不要のapiを使用してください。` },
+          { role: "user", content: prompt }
+      ],
+      model: "openai/gpt-4.1-nano"
+    }
+  });
+        const match = response.body.choices[0].message.content.match(/```javascript\n[\s\S]*?\n([\s\S]*?)}\);\n```/);
         if (match) {
           console.log(match[1]);
           const context = {
