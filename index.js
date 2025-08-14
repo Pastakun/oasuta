@@ -76,8 +76,6 @@ client.once("ready", async () => {
   await loadUserData();
   setInterval(saveUserData, 1000 * 60 * 15);
 });
-client.on("error", console.error);
-client.on("shardError", console.error);
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
@@ -163,4 +161,4 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
     }
   }
 });
-client.login(process.env.token);
+client.login(process.env.token).catch(console.error);
