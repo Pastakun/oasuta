@@ -73,11 +73,12 @@ async function runAsyncCode(code, context, timeout) {
 }
 
 client.once("ready", async () => {
-    console.log("test");
   await loadUserData();
   setInterval(saveUserData, 1000 * 60 * 15);
 });
-console.log("TOKEN:", process.env.token);
+client.on("error", console.error);
+client.on("shardError", console.error);
+
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
