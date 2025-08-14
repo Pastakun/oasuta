@@ -161,4 +161,5 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
     }
   }
 });
-client.login(process.env.token).catch(console.error);
+console.log("About to login");
+client.login(process.env.token);
