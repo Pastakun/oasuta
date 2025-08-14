@@ -134,7 +134,7 @@ client.on('interactionCreate', async interaction => {
     body: {
       messages: [
           { role:"system", content: "Discord.js code only" },
-          { role: "user", content: `if (interaction.commandName === '${prompt}') { ... }` }
+          { role: "user", content: `await interaction.deferReply();\nif (interaction.commandName === '${prompt}') { ... }` }
       ],
       model: "openai/gpt-4.1"
     }
