@@ -123,4 +123,43 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
   }
 });
 
+client.on('interactionCreate', async interaction => {
+  if (interaction.commandName === 'chat') {
+
+      interaction.commandName = interaction.options.getString('text');
+    const prompt = interaction.commandName;
+    try {
+      if (true) {
+  const response = await modelclient.path("/chat/completions").post({
+    body: {
+      messages: [
+          { role:"system", content: "Discord.js code only" },
+          { role: "user", content: `if (interaction.commandName === '${prompt}') { ... }` }
+      ],
+      model: "openai/gpt-4.1-mini"
+    }
+  });
+          console.log(response.body.choices[0].message.content);
+        const match = response.body.choices[0].message.content.match(/```[\s\S]*?\n([\s\S]*?)\n```/);
+        if (match) {
+          const context = {
+            interaction,
+            client,
+            setTimeout,
+            axios,
+            fetch,
+            require: (mod) => {
+if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}else if(mod === "node-fetch"){return fetch}else{new Error("Module not allowed");};
+
+  }
+          };
+          await runAsyncCode(match[1], context, 10000);
+        }
+      }
+    } catch (error) {
+      interaction.reply("エラーが発生しました。");
+    }
+  }
+});
+
 client.login(process.env.token);
