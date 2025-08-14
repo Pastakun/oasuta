@@ -73,10 +73,11 @@ async function runAsyncCode(code, context, timeout) {
 }
 
 client.once("ready", async () => {
+    console.log("test");
   await loadUserData();
   setInterval(saveUserData, 1000 * 60 * 15);
 });
-
+console.log("TOKEN:", process.env.token);
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
@@ -161,5 +162,4 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
     }
   }
 });
-console.log("test");
 client.login(process.env.token);
