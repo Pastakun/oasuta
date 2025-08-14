@@ -94,7 +94,7 @@ client.on("messageCreate", async (message) => {
     body: {
       messages: [
           { role:"system", content: "Discord.js code only" },
-          { role: "user", content: `message.content === '${prompt}'` }
+          { role: "user", content: `if (message.content === '${prompt}') { ... }` }
       ],
       model: "openai/gpt-4.1-mini"
     }
