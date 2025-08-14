@@ -125,7 +125,7 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
 
 client.on('interactionCreate', async interaction => {
   if (interaction.commandName === "chat") {
-
+        await interaction.deferReply();
       interaction.commandName = interaction.options.getString("content");
     const prompt = interaction.commandName;
     try {
