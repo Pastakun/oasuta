@@ -161,5 +161,11 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
     }
   }
 });
-console.log("About to login");
-client.login(process.env.token);
+client.login(process.env.token)
+  .then(() => {
+    console.log("✅ Login success");
+  })
+  .catch((err) => {
+    console.error("❌ Login failed:", err);
+  });
+
