@@ -113,7 +113,6 @@ client.on("messageCreate", async (message) => {
 if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}else if(mod === "node-fetch"){return fetch}else{new Error("Module not allowed");};
 
   }
-      },
           };
           await runAsyncCode(match[1], context, 10000);
         }
