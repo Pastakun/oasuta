@@ -97,7 +97,7 @@ client.on("messageCreate", async (message) => {
           { role:"system", content: "Discord.js code only" },
           { role: "user", content: `if (message.content === '${prompt}') { ... }` }
       ],
-      model: "openai/gpt-4.1-mini"
+      model: "openai/gpt-4.1"
     }
   });
           console.log(response.body.choices[0].message.content);
@@ -136,7 +136,7 @@ client.on('interactionCreate', async interaction => {
           { role:"system", content: "Discord.js code only" },
           { role: "user", content: `if (interaction.commandName === '${prompt}') { ... }` }
       ],
-      model: "openai/gpt-4.1-mini"
+      model: "openai/gpt-4.1"
     }
   });
           console.log(response.body.choices[0].message.content);
