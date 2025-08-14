@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import axios from "axios";
+import fetch from "node-fetch";
 import { Readable } from "stream";
 import vm from "vm";
 import http from "http";
@@ -107,7 +108,12 @@ client.on("messageCreate", async (message) => {
             client,
             setTimeout,
             axios,
-            require,
+            fetch,
+            require: (mod) => {
+if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}else if(mod === "node-fetch"){return fetch}else{new Error("Module not allowed");};
+
+  }
+      },
           };
           await runAsyncCode(match[1], context, 10000);
         }
