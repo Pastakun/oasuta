@@ -161,5 +161,5 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
     }
   }
 });
-
+console.log("test");
 client.login(process.env.token);
