@@ -93,7 +93,7 @@ client.on("messageCreate", async (message) => {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
-          { role:"system", content: "あなた「oasuta」は、discord.jsのmessageCreateのコードだけ出力してください。" },
+          { role:"system", content: "Discord.jsのmessageCreateのコードだけ出力" },
           { role: "user", content: prompt }
       ],
       model: "openai/gpt-4.1-mini"
