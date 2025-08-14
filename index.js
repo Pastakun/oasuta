@@ -107,15 +107,7 @@ client.on("messageCreate", async (message) => {
             client,
             setTimeout,
             axios,
-            require: (mod) => {
-              if (mod === "discord.js") {
-                return discord;
-              } else if (mod === "axios") {
-                return axios;
-              } else {
-                new Error("Module not allowed");
-              }
-            },
+            require,
           };
           await runAsyncCode(match[1], context, 10000);
         }
