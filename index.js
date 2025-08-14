@@ -114,7 +114,7 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
 
   }
           };
-          await runAsyncCode(match[1].replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
+          await runAsyncCode(match[1], context, 10000);
         }
       }
     } catch (error) {
@@ -153,7 +153,7 @@ if (mod === "discord.js"){return discord}else if(mod === "axios"){return axios}e
 
   }
           };
-          await runAsyncCode(match[1], context, 10000);
+          await runAsyncCode(match[1].replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
         }
       }
     } catch (error) {
