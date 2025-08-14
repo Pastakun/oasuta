@@ -6,10 +6,12 @@ import vm from "vm";
 import http from "http";
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
+/*
 http.createServer(function(req, res){
     res.write("OK");
     res.end();
 }).listen(8080);
+*/
 
 const DATABASE_CHANNEL_ID = "1402999086331990221";
 
