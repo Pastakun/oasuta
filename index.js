@@ -29,6 +29,7 @@ client.on("messageCreate", message => {
 // 環境変数からトークン取得してログイン
 (async () => {
   try {
+    console.log("TOKEN length:", process.env.TOKEN?.length); // 0やundefinedなら読み込まれていない
     await client.login(process.env.TOKEN);
     console.log("✅ Login success");
   } catch (err) {
