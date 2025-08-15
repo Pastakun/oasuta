@@ -118,7 +118,6 @@ client.on("messageCreate", async (message) => {
         const match = response.body.choices[0].message.content.match(
           /```[\s\S]*?\n([\s\S]*?)\n```/,
         );
-        if (match) {
           const context = {
             message,
             client,
@@ -137,7 +136,10 @@ client.on("messageCreate", async (message) => {
               }
             },
           };
+        if (match) {
           await runAsyncCode(match[1], context, 10000);
+        }else{
+            await runAsyncCode(response.body.choices[0].message.content, context, 10000);
         }
       }
     } catch (error) {
@@ -168,7 +170,6 @@ client.on("interactionCreate", async (interaction) => {
         const match = response.body.choices[0].message.content.match(
           /```[\s\S]*?\n([\s\S]*?)\n```/,
         );
-        if (match) {
           const context = {
             interaction,
             client,
@@ -187,15 +188,22 @@ client.on("interactionCreate", async (interaction) => {
               }
             },
           };
+        if (match) {
           await runAsyncCode(
             match[1].replace(/await interaction.deferReply\(\);/g, ""),
+            context,
+            10000,
+          );
+        }else{
+          await runAsyncCode(
+            response.body.choices[0].message.content.replace(/await interaction.deferReply\(\);/g, ""),
             context,
             10000,
           );
         }
       }
     } catch (error) {
-      interaction.reply("エラーが発生しました。");
+      interaction.editReply("エラーが発生しました。");
     }
   }
 });
