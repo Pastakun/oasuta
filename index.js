@@ -5,6 +5,12 @@ import { Readable } from "stream";
 import vm from "vm";
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
+import http from "http";
+
+http.createServer(function(req, res){
+    res.write("OK");
+    res.end();
+}).listen(8080);
 
 const DATABASE_CHANNEL_ID = "1402999086331990221";
 
@@ -150,7 +156,7 @@ client.on("interactionCreate", async (interaction) => {
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){ ... }}`,
               },
             ],
-            model: "openai/gpt-4.1",
+            model: "openai/gpt-4.1-mini",
           },
         });
         console.log(response.body.choices[0].message.content);
