@@ -103,7 +103,7 @@ client.on("messageCreate", async (message) => {
               { role: "system", content: "Discord.js code only" },
               {
                 role: "user",
-                content: `if (message.content === '${prompt}') { ... }`,
+                content: `if(message.content==='${prompt}'){...}`,
               },
             ],
             model: "openai/gpt-4.1",
@@ -153,7 +153,7 @@ client.on("interactionCreate", async (interaction) => {
               { role: "system", content: "Discord.js code only" },
               {
                 role: "user",
-                content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){ ... }}`,
+                content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
               },
             ],
             model: "openai/gpt-4.1-mini",
