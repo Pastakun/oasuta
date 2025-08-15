@@ -155,7 +155,7 @@ client.on("interactionCreate", async (interaction) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "Discord.js code only " + "userdata.system },
+              { role: "system", content: "Discord.js code only " + userdata.system },
               {
                 role: "user",
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
