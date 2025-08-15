@@ -106,7 +106,7 @@ client.on("messageCreate", async (message) => {
                 content: `if(message.content==='${prompt}'){...}`,
               },
             ],
-            model: "openai/gpt-4.1",
+            model: "openai/gpt-4.1-nano",
           },
         });
         console.log(response.body.choices[0].message.content);
