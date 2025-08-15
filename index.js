@@ -14,7 +14,7 @@ http.createServer(function(req, res){
 
 const DATABASE_CHANNEL_ID = "1402999086331990221";
 
-let userdata = { monnku: 0 };
+let userdata = { monnku: 0 , model: "", system: ""};
 
 const client = new Client({
   intents: [
@@ -91,7 +91,12 @@ client.on("messageCreate", async (message) => {
     message.reply(`もんう　もんう${userdata.monnku}`);
     return;
   }
-
+  if (message.content.startsWith("model")) {
+      userdata.model = message.content.slice("model".length);
+  }
+  if (message.content.startsWith("system")) {
+      userdata.system = message.content.slice("system".length);
+  }
   if (message.content.startsWith("oasuta")) {
     message.content = message.content.slice("oasuta".length);
     const prompt = message.content;
@@ -100,13 +105,13 @@ client.on("messageCreate", async (message) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "Discord.js code only" },
+              { role: "system", content: "Discord.js code only " + userdata.system },
               {
                 role: "user",
                 content: `if(message.content==='${prompt}'){...}`,
               },
             ],
-            model: "openai/gpt-4.1-nano",
+            model: userdata.model,
           },
         });
         console.log(response.body.choices[0].message.content);
@@ -150,13 +155,13 @@ client.on("interactionCreate", async (interaction) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "Discord.js code only" },
+              { role: "system", content: "Discord.js code only " + "userdata.system },
               {
                 role: "user",
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
               },
             ],
-            model: "openai/gpt-4.1-mini",
+            model: userdata.model,
           },
         });
         console.log(response.body.choices[0].message.content);
