@@ -105,7 +105,7 @@ client.on("messageCreate", async (message) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "discord.js code only, no explanations, no comments. " + userdata.system },
+              { role: "system", content: "discord.js code only " + userdata.system },
               {
                 role: "user",
                 content: `if(message.content==='${prompt}'){...}`,
@@ -157,7 +157,7 @@ client.on("interactionCreate", async (interaction) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "discord.js code only, no explanations, no comments. " + userdata.system },
+              { role: "system", content: "discord.js code only " + userdata.system },
               {
                 role: "user",
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
