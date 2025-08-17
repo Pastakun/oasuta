@@ -67,7 +67,7 @@ async function runAsyncCode(code, context, timeout) {
   try {
     const wrappedCode = `
       (async () => {try{
-        ${code}}catch(err){return null;}
+        ${code}}catch(err){console.log(err);}
       })()
     `;
     const script = new vm.Script(wrappedCode);
