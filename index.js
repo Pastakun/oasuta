@@ -125,6 +125,7 @@ client.on("messageCreate", async (message) => {
             axios,
             fetch,
             require,
+            console
           };
         if (match) {
           await runAsyncCode(match[1], context, 10000);
@@ -167,6 +168,7 @@ client.on("interactionCreate", async (interaction) => {
             axios,
             fetch,
             require,
+            console
           };
         if (match) {
           await runAsyncCode(
