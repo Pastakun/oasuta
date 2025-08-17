@@ -134,6 +134,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
 }
       }
     } catch (error) {
+    console.log(error);
       message.reply("エラーが発生しました。");
     }
   }
@@ -175,6 +176,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
 }
       }
     } catch (error) {
+        console.log(error);
       interaction.editReply("エラーが発生しました。");
     }
   }
