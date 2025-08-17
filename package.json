@@ -1,12 +1,13 @@
 {
   "type": "module",
   "dependencies": {
-    "node-fetch": "^3.3.2",
-    "axios": "^1.8.4",
+    "node-fetch": "latest",
+    "axios": "latest",
     "discord.js": "npm:discord.js@13.14.0",
     "discordlatest": "npm:discord.js@latest",
     "@azure-rest/ai-inference": "latest",
     "@azure/core-auth": "latest",
-    "@azure/core-sse": "latest"
+    "@azure/core-sse": "latest",
+    "canvas": "latest"
   }
 }
