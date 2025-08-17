@@ -124,8 +124,6 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             message,
             client,
             setTimeout,
-            axios,
-            fetch,
             require,
             console
           };
@@ -166,8 +164,6 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             message,
             client,
             setTimeout,
-            axios,
-            fetch,
             require,
             console
           };
