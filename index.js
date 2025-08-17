@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Partials } from "discord.js";
+import { Client, GatewayIntentBits, Partials } from "discordlatest";
 import axios from "axios";
 import fetch from "node-fetch";
 import { Readable } from "stream";
