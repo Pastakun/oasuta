@@ -124,17 +124,7 @@ client.on("messageCreate", async (message) => {
             setTimeout,
             axios,
             fetch,
-            require: (mod) => {
-              if (mod === "discord.js") {
-                return discord;
-              } else if (mod === "axios") {
-                return axios;
-              } else if (mod === "node-fetch") {
-                return fetch;
-              } else {
-                new Error("Module not allowed");
-              }
-            },
+            require,
           };
         if (match) {
           await runAsyncCode(match[1], context, 10000);
@@ -176,17 +166,7 @@ client.on("interactionCreate", async (interaction) => {
             setTimeout,
             axios,
             fetch,
-            require: (mod) => {
-              if (mod === "discord.js") {
-                return discord;
-              } else if (mod === "axios") {
-                return axios;
-              } else if (mod === "node-fetch") {
-                return fetch;
-              } else {
-                new Error("Module not allowed");
-              }
-            },
+            require,
           };
         if (match) {
           await runAsyncCode(
