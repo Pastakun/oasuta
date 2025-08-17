@@ -6,6 +6,8 @@ import vm from "vm";
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import http from "http";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 http.createServer(function(req, res){
     res.write("OK");
@@ -115,9 +117,9 @@ client.on("messageCreate", async (message) => {
           },
         });
         console.log(response.body.choices[0].message.content);
-        const match = response.body.choices[0].message.content.match(
-          /```[\s\S]*?\n([\s\S]*?)\n```/,
-        );
+const matches = [...response.body.choices[0].message.content.matchAll(
+  /```[\s\S]*?\n([\s\S]*?)\n```/g
+)].map(m => m[1]);
           const context = {
             message,
             client,
@@ -127,11 +129,9 @@ client.on("messageCreate", async (message) => {
             require,
             console
           };
-        if (match) {
-          await runAsyncCode(match[1], context, 10000);
-        }else{
-            await runAsyncCode(response.body.choices[0].message.content, context, 10000);
-        }
+          for (const code of matches) {
+  await runAsyncCode(code, context, 10000);
+}
       }
     } catch (error) {
       message.reply("エラーが発生しました。");
@@ -158,11 +158,11 @@ client.on("interactionCreate", async (interaction) => {
           },
         });
         console.log(response.body.choices[0].message.content);
-        const match = response.body.choices[0].message.content.match(
-          /```[\s\S]*?\n([\s\S]*?)\n```/,
-        );
+const matches = [...response.body.choices[0].message.content.matchAll(
+  /```[\s\S]*?\n([\s\S]*?)\n```/g
+)].map(m => m[1]);
           const context = {
-            interaction,
+            message,
             client,
             setTimeout,
             axios,
@@ -170,19 +170,9 @@ client.on("interactionCreate", async (interaction) => {
             require,
             console
           };
-        if (match) {
-          await runAsyncCode(
-            match[1].replace(/await interaction.deferReply\(\);/g, ""),
-            context,
-            10000,
-          );
-        }else{
-          await runAsyncCode(
-            response.body.choices[0].message.content.replace(/await interaction.deferReply\(\);/g, ""),
-            context,
-            10000,
-          );
-        }
+          for (const code of matches) {
+  await runAsyncCode(code.replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
+}
       }
     } catch (error) {
       interaction.editReply("エラーが発生しました。");
