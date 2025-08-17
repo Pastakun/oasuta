@@ -9,6 +9,7 @@
     "@azure/core-auth": "latest",
     "@azure/core-sse": "latest",
     "canvas": "latest",
-    "jimp": "latest"
+    "jimp": "latest",
+    "sharp": "latest"
   }
 }
