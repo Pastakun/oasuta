@@ -138,8 +138,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             console,
             Discord
           };
-for (const [key, value] of Object.entries(Discord)) {
-  context[key] = value;
+for (const key of Object.getOwnPropertyNames(Discord)) {
+  context[key] = Discord[key];
 }
   await runAsyncCode(matches.join("\n"), context, 10000);
       }
@@ -182,8 +182,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             console,
             Discord
           };
-for (const [key, value] of Object.entries(Discord)) {
-  context[key] = value;
+for (const key of Object.getOwnPropertyNames(Discord)) {
+  context[key] = Discord[key];
 }
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
