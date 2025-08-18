@@ -125,6 +125,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             message,
             client,
             setTimeout,
+            setInterval,
+            clearInterval,
             require,
             console,
             Discord
@@ -166,6 +168,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             interaction,
             client,
             setTimeout,
+            setInterval,
+            clearInterval,
             require,
             console,
             Discord
