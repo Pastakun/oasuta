@@ -66,8 +66,6 @@ async function saveUserData() {
   } catch (error) {}
 }
 
-const vm = require("vm");
-
 async function runAsyncCode(code, context, timeout) {
   try {
     context.globalThis = context;
