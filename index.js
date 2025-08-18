@@ -163,7 +163,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
-            message,
+            interaction,
             client,
             setTimeout,
             require,
