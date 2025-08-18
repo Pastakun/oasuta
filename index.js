@@ -131,9 +131,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             console,
             Discord
           };
-          for (const code of matches) {
-  await runAsyncCode(code, context, 10000);
-}
+  await runAsyncCode(matches.join("\n"), context, 10000);
       }
     } catch (error) {
     console.log(error);
@@ -173,10 +171,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             require,
             console,
             Discord
-          };
-          for (const code of matches) {
-  await runAsyncCode(code.replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
-}
+          
+  await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
     } catch (error) {
         console.log(error);
