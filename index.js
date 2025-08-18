@@ -66,20 +66,32 @@ async function saveUserData() {
   } catch (error) {}
 }
 
+const vm = require("vm");
+
 async function runAsyncCode(code, context, timeout) {
   try {
+    context.globalThis = context;
+    vm.createContext(context);
+
     const wrappedCode = `
-      (async () => {try{
-        ${code}}catch(err){console.log(err);}
+      (async () => {
+        try {
+          ${code}
+        } catch (err) {
+          console.error(err);
+        }
       })()
     `;
+
     const script = new vm.Script(wrappedCode);
-    const result = await script.runInNewContext(context, { timeout });
+    const result = await script.runInContext(context, { timeout });
     return result;
   } catch (err) {
+    console.error("Script execution failed:", err);
     return null;
   }
 }
+
 
 client.once("ready", async () => {
   await loadUserData();
