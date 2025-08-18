@@ -129,7 +129,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             clearInterval,
             require,
             console,
-            Discord
+            Discord,
+            ...Discord
           };
   await runAsyncCode(matches.join("\n"), context, 10000);
       }
@@ -170,7 +171,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             clearInterval,
             require,
             console,
-            Discord
+            Discord,
+            ...Discord
           };
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
