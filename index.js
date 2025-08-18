@@ -82,7 +82,7 @@ async function runAsyncCode(code, context, timeout) {
     const result = script.runInContext(sandbox, { timeout });
     return await result;
   } catch (err) {
-    console.error("Script execution failed:", err);
+    console.error(err);
     return null;
   }
 }
