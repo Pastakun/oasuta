@@ -68,9 +68,7 @@ async function saveUserData() {
 
 async function runAsyncCode(code, context, timeout) {
   try {
-    context.globalThis = context;
-    vm.createContext(context);
-
+    const sandbox = vm.createContext(context);
     const wrappedCode = `
       (async () => {
         try {
@@ -80,10 +78,9 @@ async function runAsyncCode(code, context, timeout) {
         }
       })()
     `;
-
     const script = new vm.Script(wrappedCode);
-    const result = await script.runInContext(context, { timeout });
-    return result;
+    const result = script.runInContext(sandbox, { timeout });
+    return await result;
   } catch (err) {
     console.error("Script execution failed:", err);
     return null;
