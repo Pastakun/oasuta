@@ -8,6 +8,7 @@ import { AzureKeyCredential } from "@azure/core-auth";
 import http from "http";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+import * as Discord from 'discord.js';
 
 http.createServer(function(req, res){
     res.write("OK");
@@ -125,7 +126,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             client,
             setTimeout,
             require,
-            console
+            console,
+            Discord
           };
           for (const code of matches) {
   await runAsyncCode(code, context, 10000);
@@ -165,7 +167,8 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             client,
             setTimeout,
             require,
-            console
+            console,
+            Discord
           };
           for (const code of matches) {
   await runAsyncCode(code.replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
