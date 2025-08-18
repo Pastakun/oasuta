@@ -132,16 +132,18 @@ const matches = [...response.body.choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
-            message,
+            interaction,
             client,
             setTimeout,
             setInterval,
             clearInterval,
             require,
             console,
-            Discord,
-            ...Discord
+            Discord
           };
+for (const [key, value] of Object.entries(Discord)) {
+  context[key] = value;
+}
   await runAsyncCode(matches.join("\n"), context, 10000);
       }
     } catch (error) {
@@ -181,9 +183,11 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             clearInterval,
             require,
             console,
-            Discord,
-            ...Discord
+            Discord
           };
+for (const [key, value] of Object.entries(Discord)) {
+  context[key] = value;
+}
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
     } catch (error) {
