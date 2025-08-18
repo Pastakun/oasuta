@@ -171,7 +171,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             require,
             console,
             Discord
-          
+          };
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
     } catch (error) {
