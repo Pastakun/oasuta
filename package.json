@@ -10,6 +10,7 @@
     "@azure/core-sse": "latest",
     "canvas": "latest",
     "jimp": "latest",
-    "sharp": "latest"
+    "sharp": "latest",
+    "gifencoder": "latest"
   }
 }
