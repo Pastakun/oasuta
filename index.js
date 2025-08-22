@@ -124,8 +124,8 @@ client.on("messageCreate", async (message) => {
             model: userdata.model,
           },
         });
-        console.log(response.body.choices[0].message.content);
-const matches = [...response.body.choices[0].message.content.matchAll(
+        console.log(JSON.parse(response.body).choices[0].message.content);
+const matches = [...JSON.parse(response.body).choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
@@ -166,8 +166,8 @@ client.on("interactionCreate", async (interaction) => {
             model: userdata.model,
           },
         });
-        console.log(response.body.choices[0].message.content);
-const matches = [...response.body.choices[0].message.content.matchAll(
+        console.log(JSON.parse(response.body).choices[0].message.content);
+const matches = [...JSON.parse(response.body).choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
