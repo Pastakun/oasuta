@@ -11,6 +11,7 @@
     "canvas": "latest",
     "jimp": "latest",
     "sharp": "latest",
-    "gifencoder": "latest"
+    "gifencoder": "latest",
+    "tesseract.js": "latest"
   }
 }
