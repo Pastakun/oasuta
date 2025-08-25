@@ -115,7 +115,7 @@ client.on("messageCreate", async (message) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: `Fill "..." in Discord.js v14. Code only. ` + userdata.system },
+              { role: "system", content: "Fill \"...\" in Discord.js v14. Code only. `ai(prompt)` を非同期で呼び出し、`await`で結果（Promise<string>）を取得。 `prompt` は具体的な文字列。Discordの動的データを利用。" + userdata.system },
               {
                 role: "user",
                 content: `if(message.content==='${prompt}'){...}`,
@@ -137,7 +137,17 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             require,
             console,
             Discord,
-            ...Discord
+            ...Discord,
+            ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
+          body: {
+            messages: [
+              { role: "user", content }
+            ],
+            model: userdata.model,
+          },
+        });
+            return response.body.choices[0].message.content;
+          }
           };
   await runAsyncCode(matches.join("\n"), context, 10000);
       }
@@ -157,7 +167,7 @@ client.on("interactionCreate", async (interaction) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: `Fill "..." in Discord.js v14. Code only. ` + userdata.system },
+              { role: "system", content: "Fill \"...\" in Discord.js v14. Code only. `ai(prompt)` を非同期で呼び出し、`await`で結果（Promise<string>）を取得。 `prompt` は具体的な文字列。Discordの動的データを利用。" + userdata.system },
               {
                 role: "user",
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
@@ -179,7 +189,17 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             require,
             console,
             Discord,
-            ...Discord
+            ...Discord,
+            ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
+          body: {
+            messages: [
+              { role: "user", content }
+            ],
+            model: userdata.model,
+          },
+        });
+            return response.body.choices[0].message.content;
+          }
           };
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
       }
