@@ -141,6 +141,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
           body: {
             messages: [
+                { role: "system", content: userdata.system },
               { role: "user", content }
             ],
             model: userdata.model,
@@ -193,6 +194,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
           body: {
             messages: [
+                { role: "system", content: userdata.system },
               { role: "user", content }
             ],
             model: userdata.model,
