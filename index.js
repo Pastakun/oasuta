@@ -151,7 +151,11 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             return response.body.choices[0].message.content;
           }
           };
-  await runAsyncCode(matches.join("\n"), context, 10000);
+          if (matches.length > 0) {
+  await runAsyncCode(matches.join("\n"), context, 1000);
+}else{
+await runAsyncCode(response.body.choices[0].message.content, context, 1000);
+}
       }
     } catch (error) {
     console.log(error);
@@ -205,7 +209,11 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             return response.body.choices[0].message.content;
           }
           };
-  await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 10000);
+          if (matches.length > 0) {
+  await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 1000);
+}else{
+await runAsyncCode(response.body.choices[0].message.content.replace(/await interaction.deferReply\(\);/g, ""), context, 1000);
+}
       }
     } catch (error) {
         console.log(error);
