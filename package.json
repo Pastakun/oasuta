@@ -12,6 +12,7 @@
     "jimp": "latest",
     "sharp": "latest",
     "gifencoder": "latest",
-    "tesseract.js": "latest"
+    "tesseract.js": "latest",
+    "cheerio": "latest"
   }
 }
