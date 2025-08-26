@@ -136,6 +136,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             clearInterval,
             require,
             console,
+            fetch,
             Discord,
             ...Discord,
             ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
@@ -189,6 +190,7 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             clearInterval,
             require,
             console,
+            fetch,
             Discord,
             ...Discord,
             ai: async function(content){const response =  await modelclient.path("/chat/completions").post({
