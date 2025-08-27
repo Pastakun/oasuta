@@ -115,7 +115,7 @@ client.on("messageCreate", async (message) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "Fill `...` in Discord.js v14. Code only.必要に応じて `ai(prompt)` を非同期で呼んでください。" + userdata.system },
+              { role: "system", content: "Fill `...` in Discord.js v14. Code only.必要に応じて `ai(prompt)` を呼んでください。" + userdata.system },
               {
                 role: "user",
                 content: `if(message.content==='${prompt}'){...}`,
@@ -173,7 +173,7 @@ client.on("interactionCreate", async (interaction) => {
         const response = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
-              { role: "system", content: "Fill `...` in Discord.js v14. Code only.必要に応じて `ai(prompt)` を非同期で呼んでください。" + userdata.system },
+              { role: "system", content: "Fill `...` in Discord.js v14. Code only.必要に応じて `ai(prompt)` を呼んでください。" + userdata.system },
               {
                 role: "user",
                 content: `if(interaction.commandName==='chat'){await interaction.deferReply();if(interaction.options.getString("content")==='${prompt}'){...}}`,
