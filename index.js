@@ -124,8 +124,8 @@ client.on("messageCreate", async (message) => {
             model: userdata.model,
           },
         });
-        console.log(response.body.choices[0].message.content);
-const matches = [...response.body.choices[0].message.content.matchAll(
+        console.log(response.choices[0].message.content);
+const matches = [...response.choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
@@ -148,13 +148,13 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             model: userdata.model,
           },
         });
-            return response.body.choices[0].message.content;
+            return response.choices[0].message.content;
           }
           };
           if (matches.length > 0) {
   await runAsyncCode(matches.join("\n"), context, 1000);
 }else{
-await runAsyncCode(response.body.choices[0].message.content, context, 1000);
+await runAsyncCode(response.choices[0].message.content, context, 1000);
 }
       }
     } catch (error) {
@@ -182,8 +182,8 @@ client.on("interactionCreate", async (interaction) => {
             model: userdata.model,
           },
         });
-        console.log(response.body.choices[0].message.content);
-const matches = [...response.body.choices[0].message.content.matchAll(
+        console.log(response.choices[0].message.content);
+const matches = [...response.choices[0].message.content.matchAll(
   /```[\s\S]*?\n([\s\S]*?)\n```/g
 )].map(m => m[1]);
           const context = {
@@ -206,13 +206,13 @@ const matches = [...response.body.choices[0].message.content.matchAll(
             model: userdata.model,
           },
         });
-            return response.body.choices[0].message.content;
+            return response.choices[0].message.content;
           }
           };
           if (matches.length > 0) {
   await runAsyncCode(matches.join("\n").replace(/await interaction.deferReply\(\);/g, ""), context, 1000);
 }else{
-await runAsyncCode(response.body.choices[0].message.content.replace(/await interaction.deferReply\(\);/g, ""), context, 1000);
+await runAsyncCode(response.choices[0].message.content.replace(/await interaction.deferReply\(\);/g, ""), context, 1000);
 }
       }
     } catch (error) {
