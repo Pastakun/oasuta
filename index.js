@@ -81,12 +81,7 @@ async function saveUserData() {
 async function runAsyncCode(code, context, timeout) {
   try {
     const sandbox = vm.createContext(context);
-    const wrappedCode = `
-      (async () => {
-        try { ${code} }
-        catch (err) { console.error(err); }
-      })()
-    `;
+    const wrappedCode = code;
     const script = new vm.Script(wrappedCode);
     return await script.runInContext(sandbox, { timeout });
   } catch (err) {
