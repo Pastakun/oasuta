@@ -95,22 +95,22 @@ async function runAsyncCode(code, context, timeout) {
   }
 }
 
-async function callModel(prompt, isInteraction = false) {
+async function callModel(prompt, type) {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
 {
   "role": "system",
   "content": `あなたはDiscord上でJavaScriptコードを生成するAIです。
-ユーザー入力 { prompt, isInteraction } に基づき、即実行可能なJavaScriptコードを生成してください。
+ユーザー入力 { type, prompt } に基づき、即実行可能なJavaScriptコードを生成してください。
 コードブロックは使わず、純粋なJavaScriptとして返してください。
-isInteraction=true の場合はスラッシュコマンド用に interaction.editReply() を使い、
-isInteraction=false の場合は通常メッセージ用に message.reply() を使ってください。
+type=interaction の場合はスラッシュコマンド用に interaction.editReply() を使い、
+type=message の場合は通常メッセージ用に message.reply() を使ってください。
 コード内では ai(text) 関数を呼び出すことで追加のAI応答を取得できます。`
 },
         {
           role: "user",
-          content: JSON.stringify({ isInteraction, prompt })
+          content: JSON.stringify({ type, prompt })
         }
       ],
       model: userdata.model,
@@ -153,7 +153,7 @@ client.on("messageCreate", async (message) => {
     const prompt = content.slice("oasuta".length).trim();
 
     try {
-      const responseContent = await callModel(prompt);
+      const responseContent = await callModel(prompt, "message");
       console.log(responseContent);
 
       const context = {
@@ -196,7 +196,7 @@ client.on("interactionCreate", async (interaction) => {
   const prompt = interaction.options.getString("content");
 
   try {
-    const responseContent = await callModel(prompt, true);
+    const responseContent = await callModel(prompt, "interaction");
     console.log(responseContent);
 
     const context = {
