@@ -81,7 +81,7 @@ async function saveUserData() {
 async function runAsyncCode(code, context, timeout) {
   try {
     const sandbox = vm.createContext(context);
-    const wrappedCode = code;
+    const wrappedCode = `(async()=>{try{${code}}catch(err){console.error(err);}})()`;
     const script = new vm.Script(wrappedCode);
     return await script.runInContext(sandbox, { timeout });
   } catch (err) {
@@ -90,22 +90,22 @@ async function runAsyncCode(code, context, timeout) {
   }
 }
 
-async function callModel(prompt, type) {
+async function callModel(type, parameter) {
   const response = await modelclient.path("/chat/completions").post({
     body: {
       messages: [
 {
   "role": "system",
-  "content": `あなたはDiscord上でJavaScriptコードを生成するAIです。
-ユーザー入力 { type, prompt } に基づき、即実行可能なJavaScriptコードを生成してください。
-コードブロックは使わず、純粋なJavaScriptとして返してください。
-type=interaction の場合はスラッシュコマンド用に interaction.editReply() を使い、
-type=message の場合は通常メッセージ用に message.reply() を使ってください。
-コード内では ai(text) 関数を呼び出すことで追加のAI応答を取得できます。`
+  "content": `あなたはDiscord.js v14の${type}イベントが発火するたびにコードを生成して即実行するBotのAIです。
+次の変数が直接スコープ内で利用可能です：
+${type}, client, setTimeout, setInterval, clearInterval, require, console, Discord, ...Discord, ai
+ai(text)を少なくとも1回は呼び出して処理を行ってください。
+返すのは実行するJavaScriptコードだけで、コードブロック（\`\`\`）は使わないでください。
+${userdata.system}`
 },
         {
           role: "user",
-          content: JSON.stringify({ type, prompt })
+          content: `${parameter}`
         }
       ],
       model: userdata.model,
@@ -146,9 +146,10 @@ client.on("messageCreate", async (message) => {
 
   if (content.startsWith("oasuta")) {
     const prompt = content.slice("oasuta".length).trim();
+    message.content = prompt;
 
     try {
-      const responseContent = await callModel(prompt, "message");
+      const responseContent = await callModel("message", message);
       console.log(responseContent);
 
       const context = {
@@ -189,9 +190,10 @@ client.on("interactionCreate", async (interaction) => {
 
   await interaction.deferReply();
   const prompt = interaction.options.getString("content");
+  interaction.commandName = prompt;
 
   try {
-    const responseContent = await callModel(prompt, "interaction");
+    const responseContent = await callModel("interaction", interaction);
     console.log(responseContent);
 
     const context = {
@@ -219,7 +221,7 @@ client.on("interactionCreate", async (interaction) => {
       },
     };
 
-    await runAsyncCode(responseContent, context, 1000);
+    await runAsyncCode(responseContent.replace("interaction.reply", "interaction.editReply"), context, 1000);
   } catch (error) {
     console.error(error);
     interaction.editReply("エラーが発生しました。");
