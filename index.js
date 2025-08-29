@@ -145,8 +145,7 @@ client.on("messageCreate", async (message) => {
   }
 
   if (content.startsWith("oasuta")) {
-    const prompt = content.slice("oasuta".length).trim();
-    message.content = prompt;
+    message.content = content.slice("oasuta".length).trim();
 
     try {
       const responseContent = await callModel("message", message);
@@ -162,12 +161,12 @@ client.on("messageCreate", async (message) => {
         console,
         Discord,
         ...Discord,
-        ai: async (text) => {
+        ai: async (prompt) => {
           const aiResponse = await modelclient.path("/chat/completions").post({
             body: {
               messages: [
                 { role: "system", content: userdata.system },
-                { role: "user", content: text },
+                { role: "user", content: prompt },
               ],
               model: userdata.model,
             },
@@ -188,8 +187,6 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName !== "chat") return;
 
   await interaction.deferReply();
-  const prompt = interaction.options.getString("content");
-  interaction.commandName = prompt;
 
   try {
     const responseContent = await callModel("interaction", interaction);
@@ -205,12 +202,12 @@ client.on("interactionCreate", async (interaction) => {
       console,
       Discord,
       ...Discord,
-      ai: async (text) => {
+      ai: async (prompt) => {
         const aiResponse = await modelclient.path("/chat/completions").post({
           body: {
             messages: [
               { role: "system", content: userdata.system },
-              { role: "user", content: text },
+              { role: "user", content: prompt },
             ],
             model: userdata.model,
           },
