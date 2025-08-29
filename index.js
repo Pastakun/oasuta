@@ -160,7 +160,6 @@ client.on("messageCreate", async (message) => {
         clearInterval,
         require,
         console,
-        fetch,
         Discord,
         ...Discord,
         ai: async (text) => {
@@ -204,7 +203,6 @@ client.on("interactionCreate", async (interaction) => {
       clearInterval,
       require,
       console,
-      fetch,
       Discord,
       ...Discord,
       ai: async (text) => {
