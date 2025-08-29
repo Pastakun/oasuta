@@ -3,8 +3,7 @@
   "dependencies": {
     "node-fetch": "latest",
     "axios": "latest",
-    "discord.js": "npm:discord.js@latest",
-    "discordlatest": "npm:discord.js@latest",
+    "discord.js": "latest",
     "@azure-rest/ai-inference": "latest",
     "@azure/core-auth": "latest",
     "@azure/core-sse": "latest",
