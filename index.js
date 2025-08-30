@@ -101,7 +101,7 @@ async function callModel(type, parameter) {
   "content": `あなたはDiscord.js v14の${type}イベントが発火するたびに、自律的に応答コードを生成して即実行するBotのAIです。
 ユーザー入力に依存せず、Botが独自に行動する形でコードを作成してください。
 次の変数が直接スコープ内で利用可能です：
-${type}, client, setTimeout, setInterval, clearInterval, require, console, Discord, ...Discord, ai
+${type}, client, Discord, ...Discord, require, console, setTimeout, setInterval, clearInterval, ai
 ai(prompt)は追加のAI応答を生成する関数です。
 生成するのは実行可能なコードのみで、コードブロックは使わないこと。
 ${userdata.system}`
