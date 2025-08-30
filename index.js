@@ -161,6 +161,7 @@ client.on("messageCreate", async (message) => {
         console,
         Discord,
         ...Discord,
+        fetch,
         ai: async (prompt) => {
           const aiResponse = await modelclient.path("/chat/completions").post({
             body: {
@@ -202,6 +203,7 @@ client.on("interactionCreate", async (interaction) => {
       console,
       Discord,
       ...Discord,
+      fetch,
       ai: async (prompt) => {
         const aiResponse = await modelclient.path("/chat/completions").post({
           body: {
