@@ -8,6 +8,7 @@ import { AzureKeyCredential } from "@azure/core-auth";
 import http from "http";
 import { createRequire } from "module";
 import * as Discord from "discord.js";
+import util from 'util';
 
 
 const require = createRequire(import.meta.url);
@@ -82,6 +83,7 @@ async function runAsyncCode(code, context, timeout) {
   try {
     const sandbox = vm.createContext(context);
     const wrappedCode = `(async()=>{try{${code}}catch(err){console.error(err);}})()`;
+    console.log(wrappedCode);
     const script = new vm.Script(wrappedCode);
     return await script.runInContext(sandbox, { timeout });
   } catch (err) {
@@ -96,22 +98,22 @@ async function callModel(type, parameter) {
       messages: [
 {
   "role": "system",
-  "content": `あなたはDiscord.js v14の${type}イベントが発火するたびにコードを生成して即実行するBotのAIです。
+  "content": `あなたはDiscord.js v14の${type}イベントが発火するたびに、自律的に応答コードを生成して即実行するBotのAIです。
+ユーザー入力に依存せず、Botが独自に行動する形でコードを作成してください。
 次の変数が直接スコープ内で利用可能です：
 ${type}, client, setTimeout, setInterval, clearInterval, require, console, Discord, ...Discord, ai
-ai(prompt)は追加のAI応答を生成する関数です。少なくとも1回は使うこと。
-生成するのは実行可能なコードのみ。コードブロックは使わないこと。
+ai(prompt)は追加のAI応答を生成する関数です。
+生成するのは実行可能なコードのみで、コードブロックは使わないこと。
 ${userdata.system}`
 },
         {
           role: "user",
-          content: `${parameter}`
+          content: util.inspect(parameter, {depth: null})
         }
       ],
       model: userdata.model,
     }
   });
-
   return response.body.choices[0].message.content;
 }
 
@@ -145,11 +147,9 @@ client.on("messageCreate", async (message) => {
   }
 
   if (content.startsWith("oasuta")) {
-    message.content = content.slice("oasuta".length).trim();
-
+    message.content = message.content.slice("oasuta".length).trim();
     try {
       const responseContent = await callModel("message", message);
-      console.log(responseContent);
 
       const context = {
         message,
@@ -187,10 +187,10 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName !== "chat") return;
 
   await interaction.deferReply();
+  interaction.deferReply = async () => {};
 
   try {
     const responseContent = await callModel("interaction", interaction);
-    console.log(responseContent);
 
     const context = {
       interaction,
@@ -216,7 +216,7 @@ client.on("interactionCreate", async (interaction) => {
       },
     };
 
-    await runAsyncCode(responseContent.replace("interaction.reply", "interaction.editReply"), context, 1000);
+    await runAsyncCode(responseContent.replace(/interaction\.reply/g, "interaction.editReply").replace(/interaction\.deferred/g, "true"), context, 1000);
   } catch (error) {
     console.error(error);
     interaction.editReply("エラーが発生しました。");
