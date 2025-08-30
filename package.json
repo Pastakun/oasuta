@@ -4,7 +4,7 @@
     "node-fetch": "latest",
     "axios": "latest",
     "discord.js": "latest",
-    "@discordjs/voice": "latest"
+    "@discordjs/voice": "latest",
     "@azure-rest/ai-inference": "latest",
     "@azure/core-auth": "latest",
     "@azure/core-sse": "latest",
