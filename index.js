@@ -103,7 +103,7 @@ async function callModel(type, parameter) {
 ユーザー入力に依存せず、Botが独自に行動する形でコードを作成してください。
 次の変数が直接スコープ内で利用可能です：
 ${type}, client, Discord, ...Discord, require, console, setTimeout, setInterval, clearInterval, ai
-ai(prompt)は追加のAI応答を生成する関数です。
+ai(prompt)は追加のAI応答を生成する関数です。1回は使うこと。
 生成するのは実行可能なコードのみで、コードブロックは使わないこと。
 ${userdata.system}`
 },
